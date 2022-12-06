@@ -8,7 +8,6 @@ on:
 jobs:
   Auto-Cerate-PR:
     runs-on: ubuntu-latest
-    if: ${{ github.event.repository.owner.name == 'beeclover' }}
     steps:
       - name: Extract branch name
         shell: bash
@@ -16,7 +15,7 @@ jobs:
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "##[set-output name=id;]$(echo ${GITHUB_REF#refs/heads/Hansanghyeon/issue})"
         id: extract_branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
