@@ -1,4 +1,4 @@
-name: 🚛 매뉴얼 배포
+name: 🚛 프로덕션 배포
 on:
   release:
     types: [published]
