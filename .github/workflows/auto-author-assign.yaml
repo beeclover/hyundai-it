@@ -1,5 +1,5 @@
 # Doc - https://github.com/marketplace/actions/auto-author-assign
-name: "Pull Request Auto Assignee"
+name: "✋ Pull Request Auto Assignee"
 
 on:
   pull_request_target:
