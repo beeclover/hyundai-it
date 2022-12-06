@@ -16,10 +16,24 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: 🔨 npm workspace build
+      - name: 🔨 (node dependencies) npm workspace build
         run: |
           npm install -ws
           npm run build
+
+      # Caching dependencies for faster builds
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: 🔨 (php dependencies) php composer install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.0"
+          version: 1
+          command: cd apps/theme && composer install
 
       - name: 📂 Sync files to Server
         uses: burnett01/rsync-deployments@5.2.1
@@ -27,7 +41,7 @@ jobs:
           switches: -avzr --delete
           # ARGS: "-rltgoDzvO --ignore-times"
           path: apps/theme/
-          remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/main
+          remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/test
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
