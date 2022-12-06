@@ -38,7 +38,7 @@ jobs:
       - name: 📂 Sync files to Server
         uses: burnett01/rsync-deployments@5.2.1
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --exclude="node_modules"
           # ARGS: "-rltgoDzvO --ignore-times"
           path: apps/theme/
           remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/main
