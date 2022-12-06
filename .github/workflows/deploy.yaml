@@ -36,7 +36,7 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: "8.0"
-          command: composer install
+          command: install
 
       - name: 📂 Sync files to Server
         uses: burnett01/rsync-deployments@5.2.1
