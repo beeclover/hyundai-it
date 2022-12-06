@@ -28,12 +28,15 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
+      - name: move theme folder
+        run: |
+          cd apps/theme
+
       - name: 🔨 (php dependencies) php composer install
         uses: php-actions/composer@v6
         with:
           php_version: "8.0"
-          version: 1
-          command: cd apps/theme && composer install
+          command: composer install
 
       - name: 📂 Sync files to Server
         uses: burnett01/rsync-deployments@5.2.1
