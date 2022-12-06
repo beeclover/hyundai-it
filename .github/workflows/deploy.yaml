@@ -20,6 +20,7 @@ jobs:
         run: |
           npm install -ws
           npm run build
+          ls -al apps/theme/public/dist
 
       # Caching dependencies for faster builds
       - name: Cache Composer dependencies
