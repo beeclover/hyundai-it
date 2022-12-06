@@ -35,6 +35,7 @@ jobs:
 
   noti:
     name: 🦅 빌드 결과 노티
+    needs: [deploy]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
