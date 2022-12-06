@@ -6,9 +6,7 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "lerna run build && lerna run build:production --scope=homepage"
-  },
-  "devDependencies": {
-    "lerna": "^6.1.0"
+    "dev": "npm run dev -w=sage & npm run dev -w=homepage",
+    "build": "npm run build -w=homepage && npm run build -w=sage && npm run deploy -w=homepage"
   }
 }
