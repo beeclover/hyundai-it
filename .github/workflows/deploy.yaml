@@ -41,7 +41,7 @@ jobs:
           switches: -avzr --delete
           # ARGS: "-rltgoDzvO --ignore-times"
           path: apps/theme/
-          remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/test
+          remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/main
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
