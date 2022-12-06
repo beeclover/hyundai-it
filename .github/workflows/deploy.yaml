@@ -32,7 +32,8 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: "8.0"
-          command: install --working-dir=./apps/theme
+          args: --working-dir=./apps/theme
+          command: install
 
       - name: 📂 Sync files to Server
         uses: burnett01/rsync-deployments@5.2.1
