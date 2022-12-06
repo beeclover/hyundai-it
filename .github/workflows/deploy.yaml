@@ -1,0 +1,66 @@
+name: 🚛 매뉴얼 배포
+on:
+  release:
+    types: [published]
+  push:
+    branches: [main]
+    paths:
+      - "src/**/*"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: 🚛 소스코드 업데이트 & 빌드파일 배포
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 🏗 setup-node (v18.x)
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+
+      - name: 🔨 npm workspace build
+        run: |
+          npm install -ws
+          npm run build
+
+      - name: 📂 Sync files to Server
+        uses: burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avzr --delete
+          # ARGS: "-rltgoDzvO --ignore-times"
+          path: apps/theme/
+          remote_path: /www/hyeondaeaiti_570/public/wp-content/themes
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_port: ${{ secrets.DEPLOY_PORT }}
+
+  noti:
+    name: 🦅 빌드 결과 노티
+    runs-on: ubuntu-latest
+    steps:
+      - name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+      - name: 🛎 슬랙알림
+        uses: 8398a7/action-slack@v3
+        with:
+          job_name: 🚛 소스코드 업데이트 & 빌드파일 배포
+          status: ${{ job.status }}
+          fields: repo,message,author,workflow,took,job # selectable (default: repo,message)
+          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.PETEROSEA_SLACK_WEBHOOK_URL }} # required
+        if: always()
