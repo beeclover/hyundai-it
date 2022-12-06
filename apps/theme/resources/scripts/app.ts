@@ -1,5 +1,20 @@
-import { domReady } from "@roots/sage/client";
-import Alpine from "alpinejs";
+import { domReady } from '@roots/sage/client';
+/**
+ * External Dependencies
+ */
+import 'jquery';
+import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect';
+import store from './store';
+import 'homepage'
+
+Alpine.plugin(intersect);
+
+import Router from './util/router';
+import routes from './routes';
+
+/** Populate Router instance with DOM routes */
+const Routes = new Router(routes);
 
 /**
  * app.main
@@ -10,12 +25,9 @@ const main = async (err) => {
     console.error(err);
   }
 
-  // ========================================================
   // application code
-  // ========================================================
-
-  // Alpine.js
-  window.Alpine = Alpine;
+  Routes.loadEvents();
+  store();
   Alpine.start();
 };
 
@@ -24,6 +36,5 @@ const main = async (err) => {
  *
  * @see https://webpack.js.org/api/hot-module-replacement
  */
-// @ts-ignore
-domReady(main);
+domReady(main as () => unknown);
 import.meta.webpackHot?.accept(main);

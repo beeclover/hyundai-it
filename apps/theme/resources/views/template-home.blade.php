@@ -7,7 +7,7 @@
 @section('content')
   @while(have_posts()) @php(the_post())
     @include('partials.page-header')
-    test
+    <div id="root"></div>
     @include('partials.content-page')
   @endwhile
 @endsection
