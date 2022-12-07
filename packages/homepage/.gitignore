@@ -1,5 +1,4 @@
 .cache
-public/**/*
-!public/index.html
 node_modules
 *.log
+public/main.js
