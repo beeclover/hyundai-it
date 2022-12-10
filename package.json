@@ -2,11 +2,6 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
-  "scripts": {
-    "dev": "npm run dev -w=sage & npm run dev -w=homepage",
-    "build": "npm run build -w=homepage && npm run build -w=sage && npm run postbuild -w=homepage"
-  }
+    "packages/*"
+  ]
 }
