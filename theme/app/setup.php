@@ -15,6 +15,9 @@ use function Roots\bundle;
  */
 add_action('wp_enqueue_scripts', function () {
     bundle('app')->enqueue();
+
+    wp_enqueue_style('pretendard', asset('fonts/pretendard/dist/web/static/pretendard.css')->uri(), false, null);
+
 }, 100);
 
 /**
