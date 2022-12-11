@@ -295,7 +295,7 @@ export default function App() {
         </div>
       </form>
 
-      {process.env.NODE_ENV !== "!production" && (
+      {process.env.NODE_ENV !== "production" && (
         <div tw="fixed bottom-0 right-0 p-[6px] bg-red-200 grid text-[12px]">
           <button
             type="button"
