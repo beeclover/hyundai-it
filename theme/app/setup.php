@@ -18,6 +18,19 @@ add_action('wp_enqueue_scripts', function () {
 }, 100);
 
 /**
+ * Register the theme assets. Footer
+ *
+ * @return void
+ */
+add_action( 'wp_footer', function () {
+    // Specific page
+    global $post;
+    if (!empty($post->ID) && $post->ID === 49) {
+      wp_enqueue_script('구매문의 React', asset('dist/forms/main.js')->uri(), false, null);
+    }
+} );
+
+/**
  * Register the theme assets with the block editor.
  *
  * @return void
