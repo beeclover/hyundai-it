@@ -5,6 +5,10 @@ import tw, { styled } from "twin.macro";
 import { useEffect, useState } from "react";
 import SearchBar from "components/AutoComplete";
 import RadioCircleStyle from "components/Radio";
+import LoadingWrap from "components/LoadingWrap";
+import SuccessAnimation from "components/SuccessAnimation";
+import ErrorAnimation from "components/ErrorAnimation";
+import ReactLoading from "react-loading";
 
 type Inputs = {
   agree: boolean,
@@ -17,9 +21,68 @@ type Inputs = {
 
 export default function App() {
   const { register, setValue, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ mode: 'onChange' });
+
+  // ======================
+  // 제출
+  // ======================
+  const [response, setResponse] = useState({
+    loading: false,
+    status: '' as 'success' | 'error' | '',
+    message: `<div id='gform_confirmation_wrapper_1' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_1' class='gform_confirmation_message_1 gform_confirmation_message'>연락 해주셔서 감사합니다! 곧 연락드리겠습니다.<\/div><\/div>`,
+  });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    fetch('/wp-json/contact-form-7/v1/contact-forms/31/feedback')
+    setResponse(_.merge(response, { loading: true }));
+    // 키 매칭
+    let overrideData = _.mapKeys(data, (_value, key) => {
+      if (key === 'agree') return 'input_3.1';
+      if (key === 'your-name') return 'input_4';
+      if (key === 'your-email') return 'input_5';
+      if (key === 'your-phone') return 'input_8';
+      if (key === 'subject') return 'input_6';
+      if (key === 'message') return 'input_7';
+    })
+    // 키 매칭
+    overrideData = _.mapValues(overrideData, (_value, key) => {
+      if (key === 'input_3.1' && _value) return '동의함';
+      return _value;
+    });
+    const res = await fetch('https://hyundai-it.demo.beeclover.pro/gravityformsapi/forms/1/submissions', {
+      method: 'POST',
+      body: JSON.stringify({ input_values: overrideData }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => res.json())
+      .catch(error => {
+        console.log(error)
+      });
+
+    /**
+     * https://docs.gravityforms.com/web-api/#status-codes
+     * 
+     * Successful requests will generate either a 200 (OK) or 201 (resource created) status code.
+     * Accepted but unfinished requests will generate a 202 (accepted) status code.
+     *
+     * Illegal or illogical requests, will result in a 400 (bad request) status code.
+     *
+     * Unauthenticated or unauthorized requests will receive the 401 (not authorized) status code.
+     *
+     * Requests for non-existent resources will receive a 404 (not found) status code.
+     *
+     * Server errors will generate a 500 (server error) status code.
+     *
+     * Unsupported requests will receive the 501 (Not implemented) status code.
+     */
+    // 정상적으로 요청이 되고 폼이 등록되었을때
+    if (res?.status === 200) {
+      setResponse(_.merge(response, { loading: false, status: 'success', message: res.response.confirmation_message }));
+    }
+
+    // 정상적으로 요청이 되었으나 폼이 등록되지 않았을때
+    if (!res || res.status === 400 || res.status === 404 || res.status === 500) {
+      setResponse(_.merge(response, { loading: false, status: 'error', message: '죄송합니다<br/>시스템에 문제가 생겼습니다.' }));
+    }
   };
 
   // ======================
@@ -37,8 +100,30 @@ export default function App() {
 
   return (
     <>
-      /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-      <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard">
+      {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
+      <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard relative">
+        <LoadingWrap isOpen={response.loading || response.status !== ''}>
+          <div tw="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-50 z-50 text-center">
+            <div>
+              {/* 로딩중일 때만 보여진다. */}
+              <div css={[response.status === '' ? tw`block` : tw`hidden`]}>
+                <ReactLoading type="bubbles" color="#3c92ff" />
+              </div>
+              <div tw="flex flex-col items-center gap-[24px]">
+                {/* 결과값이 200 */}
+                <SuccessAnimation isOpen={response.status === 'success'} />
+                {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+                {response.status === 'success' && <div tw="text-[18px]" dangerouslySetInnerHTML={{ __html: response.message }} />}
+              </div>
+              <div tw="flex flex-col items-center gap-[24px]">
+                {/* 결과값이 400, 404, 401, 500 일때 */}
+                <ErrorAnimation isOpen={response.status === 'error'} />
+                {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+                {response.status === 'error' && <div tw="text-[18px] text-red-400" dangerouslySetInnerHTML={{ __html: response.message }} />}
+              </div>
+            </div>
+          </div>
+        </LoadingWrap>
         <div>
           <Heading>개인정보 수집 및 이용약관</Heading>
           <Spacer tw="h-[30px]" />
@@ -210,7 +295,7 @@ export default function App() {
         </div>
       </form>
 
-      {process.env.NODE_ENV === "development" && (
+      {process.env.NODE_ENV !== "!production" && (
         <div tw="fixed bottom-0 right-0 p-[6px] bg-red-200 grid text-[12px]">
           <button
             type="button"
@@ -224,7 +309,7 @@ export default function App() {
               setValue('agree', true);
               setValue('your-name', '홍길동');
               setValue('your-phone', '010-1234-5678');
-              setEmailValue({ name: 'test', domain: 'gmail.com', domain2: '' });
+              setEmailValue({ name: 'test', domain: 'beeclover.pro', domain2: '' });
               setValue('subject', '제목입니다.');
               setValue('message', '내용입니다.');
             }}

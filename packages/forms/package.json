@@ -1,6 +1,6 @@
 {
   "name": "forms",
-  "version": "1.0.0",
+  "version": "1.0.0-pre-alpha.1",
   "main": "index.js",
   "babelMacros": {
     "twin": {
@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "webpack serve --mode=development",
     "build": "webpack --mode=production",
+    "postbuild": "rm -rf ../../theme/public/dist/forms && mkdir -p ../../theme/public/dist && cp -r public forms && mv forms ../../theme/public/dist/",
     "serve": "npx serve public"
   },
   "dependencies": {
@@ -21,7 +22,8 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.40.0"
+    "react-hook-form": "^7.40.0",
+    "react-loading": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
