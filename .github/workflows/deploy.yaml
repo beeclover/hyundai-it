@@ -16,10 +16,17 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: 🔨 (node dependencies) npm workspace build
+      - name: 🔨 (node dependencies) theme yarn build
         run: |
-          npm install -ws
-          npm run build
+          cd theme
+          yarn
+          yarn install
+
+      - name: 🔨 (node dependencies) monorepo yarn workspace build
+        run: |
+          yarn
+          yarn workspace homepage build
+          yarn workspace forms build
 
       # Caching dependencies for faster builds
       - name: Cache Composer dependencies
@@ -32,7 +39,7 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: "8.0"
-          args: --working-dir=./apps/theme
+          args: --working-dir=./theme
           command: install
 
       - name: 📂 Sync files to Server
@@ -40,7 +47,7 @@ jobs:
         with:
           switches: -avzr --delete --exclude="node_modules"
           # ARGS: "-rltgoDzvO --ignore-times"
-          path: apps/theme/
+          path: theme/
           remote_path: /www/hyeondaeaiti_570/public/wp-content/themes/main
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
