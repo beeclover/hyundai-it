@@ -36,7 +36,7 @@ export default function App() {
     let overrideData = _.mapKeys(data, (_value, key) => {
       if (key === 'agree') return 'input_3.1';
       if (key === 'your-name') return 'input_4';
-      if (key === 'your-email') return 'input_5';
+      if (key === 'your-email') return 'input_9';
       if (key === 'your-phone') return 'input_8';
       if (key === 'subject') return 'input_6';
       if (key === 'message') return 'input_7';
