@@ -1171,6 +1171,16 @@
           "name": "Ui-monospace",
           "slug": "mono",
           "fontFamily": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace"
+        },
+        {
+          "name": "Niveau-grotesk",
+          "slug": "ng",
+          "fontFamily": "niveau-grotesk"
+        },
+        {
+          "name": "-apple-system",
+          "slug": "pretendard",
+          "fontFamily": "-apple-system,BlinkMacSystemFont,Apple SD Gothic Neo,Pretendard Variable,Pretendard,Roboto,Noto Sans KR,Segoe UI,Malgun Gothic,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,sans-serif"
         }
       ],
       "fontSizes": [
