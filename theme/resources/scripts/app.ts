@@ -1,4 +1,5 @@
 import { domReady } from '@roots/sage/client'
+import { bootstarpAlpine } from './bootstrap'
 
 /**
  * app.main
@@ -8,6 +9,9 @@ const main = async err => {
     // handle hmr errors
     console.error(err)
   }
+
+  // bootstrap
+  bootstarpAlpine();
 
   // application code
 }
