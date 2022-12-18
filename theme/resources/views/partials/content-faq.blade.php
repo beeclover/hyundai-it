@@ -23,14 +23,20 @@
   >
     {!! $title !!}
   </button>
-  <i class="uit uit-angle-left-b text-[24px]" :class="isExpanded({!! $id !!}) ? 'rotate-[90deg]' : '-rotate-90'"></i>
+  <button
+    :class="isExpanded({!! $id !!}) ? 'rotate-[90deg]' : '-rotate-90'"
+    @click="() => toggle({!! $id !!})"
+  >
+    <i class="uit uit-angle-left-b text-[24px]"></i>
+  </button>
 </div>
 <div
-  x-cloak
   x-show="isExpanded({!! $id !!})"
-  x-collapse
-  class="col-span-4 px-[71px] py-[49px]"
+  x-collapse.duration.1000ms
+  class="col-span-4"
   :class="isExpanded({!! $id !!}) ? 'bg-[#f5f5f5]' : 'bg-white'"
 >
-  @php(the_content())
+  <div class="px-[71px] py-[49px]">
+    @php(the_content())
+  </div>
 </div>
