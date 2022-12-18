@@ -4,6 +4,8 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
+use WP\Archive\UI;
+
 class Archive extends Composer
 {
   /**
@@ -11,7 +13,10 @@ class Archive extends Composer
    *
    * @var array
    */
-  protected static $views = ['archive'];
+  protected static $views = [
+    'archive',
+    'archive-*'
+    ];
 
   /**
    * Data to be passed to view before rendering.
@@ -22,6 +27,7 @@ class Archive extends Composer
   {
     return [
       'title' => $this->title(),
+      'pagination' => (new UI\Pagination())->render(),
     ];
   }
 
