@@ -20,7 +20,7 @@
     <div class="order-1">
       {{-- 맨 첫 페이지일때 --}}
       @if ($paged == 1)
-        <div class="relative inline-flex items-center justify-center w-[28px] h-[28px] rounded-[4px] border">
+        <div class="relative inline-flex items-center justify-center w-[28px] h-[28px] rounded-[4px] border text-[#999999]">
           <span class="sr-only">First</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[0.8em] h-[0.8em]">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
@@ -37,12 +37,12 @@
 
       {{-- 맨 첫 페이지일때 --}}
       @if ($paged == 1)
-        <a href="{!! $prevlink !!}" class="relative inline-flex items-center justify-center w-[28px] h-[28px] rounded-[4px] border">
+        <div class="relative inline-flex items-center justify-center w-[28px] h-[28px] rounded-[4px] border text-[#999999]">
           <span class="sr-only">Previous</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[0.8em] h-[0.8em]">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
-        </a>
+        </div>
       @else
         <a href="{!! $prevlink !!}" class="relative inline-flex items-center justify-center w-[28px] h-[28px] rounded-[4px] border">
           <span class="sr-only">Previous</span>
