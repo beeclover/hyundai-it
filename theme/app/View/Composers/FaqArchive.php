@@ -14,11 +14,11 @@ class FaqArchive extends Composer
   protected static $views = ['archive-faq'];
 
   /**
-   * Data to be passed to view before rendering.
+   * Data to be passed to view before rendering, but after merging.
    *
    * @return array
    */
-  public function with()
+  public function override()
   {
     return [
       'title' => $this->title(),
