@@ -1,5 +1,5 @@
-import {domReady} from '@roots/sage/client';
-import {registerBlockStyle, unregisterBlockStyle} from '@wordpress/blocks';
+import { domReady } from '@roots/sage/client';
+import { registerBlockStyle, unregisterBlockStyle } from '@wordpress/blocks';
 
 /**
  * editor.main
@@ -23,5 +23,5 @@ const main = (err) => {
  *
  * @see https://webpack.js.org/api/hot-module-replacement
  */
-domReady(main);
+domReady(main as () => unknown);
 import.meta.webpackHot?.accept(main);

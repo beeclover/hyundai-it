@@ -1,0 +1,43 @@
+.headroom {
+  will-change: transform;
+  transition: transform 200ms linear;
+
+
+  &--pinned {
+    transform: translateY(-0%);
+  }
+
+  &--unpinned {
+    transform: translateY(-100%);
+  }
+}
+
+body {
+  --gnb-h: 90px;
+  --topAreaHeight: calc(var(--gnb-h) + var(--wp-bar, 0px));
+}
+
+header#gnb {
+  height: var(--gnb-h);
+  position: fixed;
+  top: 0;
+  z-index: 9000;
+  width: 100%;
+  font-size: 1.125rem;
+
+  &.headroom {
+    @apply bg-black;
+
+    &--top {
+      @apply bg-transparent;
+    }
+
+    &--pinned {
+      transform: translateY(-0%);
+    }
+
+    &--unpinned {
+      transform: translateY(-100%);
+    }
+  }
+}

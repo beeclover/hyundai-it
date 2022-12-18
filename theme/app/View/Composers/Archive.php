@@ -4,14 +4,19 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class App extends Composer
+use WP\Archive\UI;
+
+class Archive extends Composer
 {
   /**
    * List of views served by this composer.
    *
    * @var array
    */
-  protected static $views = ['*'];
+  protected static $views = [
+    'archive',
+    'archive-*'
+    ];
 
   /**
    * Data to be passed to view before rendering.
@@ -21,17 +26,13 @@ class App extends Composer
   public function with()
   {
     return [
-      'siteName' => $this->siteName(),
+      'title' => $this->title(),
+      'pagination' => (new UI\Pagination())->render(),
     ];
   }
 
-  /**
-   * Returns the site name.
-   *
-   * @return string
-   */
-  public function siteName()
+  public function title()
   {
-    return get_bloginfo('name', 'display');
+    return get_the_archive_title();
   }
 }
