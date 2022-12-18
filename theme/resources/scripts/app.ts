@@ -1,5 +1,6 @@
 import { domReady } from '@roots/sage/client'
 import { bootstarpAlpine } from './bootstrap'
+import header from './header'
 
 /**
  * app.main
@@ -14,6 +15,7 @@ const main = async err => {
   bootstarpAlpine();
 
   // application code
+  header()
 }
 
 /**
