@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
+use WP\NAV;
 
 class FaqArchive extends Composer
 {
@@ -23,6 +24,7 @@ class FaqArchive extends Composer
     return [
       'title' => $this->title(),
       'thumbnail' => $this->thumbnail(),
+      'parent_menu' => (new NAV\Menu())->my_menu_parent('primary_navigation')
     ];
   }
 

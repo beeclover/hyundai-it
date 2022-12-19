@@ -8,4 +8,5 @@
     @yield('content')
   </main>
 
+@include('sections.footer-sub')
 @include('sections.footer')
