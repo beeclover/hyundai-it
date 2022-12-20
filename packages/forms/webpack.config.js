@@ -10,6 +10,7 @@ module.exports = function webpackConfig(env, args) {
   return {
     entry: {
       'purchasep-inquiry': path.join(__dirname, 'src/PurchaseInquiry.tsx'),
+      'as-inquiry': path.join(__dirname, 'src/AsInquiry.tsx'),
     },
     output: {
       filename: '[name].js',
