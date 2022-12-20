@@ -1,14 +1,17 @@
-import Spacer from "components/Spacer";
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import GlobalStyle from 'styles/GlobalStyle'
+import Spacer from "components/Spacer"
 import _ from "lodash"
-import { useForm, SubmitHandler } from "react-hook-form";
-import tw, { styled } from "twin.macro";
-import { useEffect, useState } from "react";
-import SearchBar from "components/AutoComplete";
-import RadioCircleStyle from "components/Radio";
-import LoadingWrap from "components/LoadingWrap";
-import SuccessAnimation from "components/SuccessAnimation";
-import ErrorAnimation from "components/ErrorAnimation";
-import ReactLoading from "react-loading";
+import { useForm, SubmitHandler } from "react-hook-form"
+import tw, { styled } from "twin.macro"
+import { useEffect, useState } from "react"
+import SearchBar from "components/AutoComplete"
+import RadioCircleStyle from "components/Radio"
+import LoadingWrap from "components/LoadingWrap"
+import SuccessAnimation from "components/SuccessAnimation"
+import ErrorAnimation from "components/ErrorAnimation"
+import ReactLoading from "react-loading"
 
 type Inputs = {
   agree: boolean,
@@ -40,47 +43,37 @@ export default function App() {
       if (key === 'your-phone') return 'input_8';
       if (key === 'subject') return 'input_6';
       if (key === 'message') return 'input_7';
+      return key;
     })
     // 키 매칭
     overrideData = _.mapValues(overrideData, (_value, key) => {
       if (key === 'input_3.1' && _value) return '동의함';
       return _value;
     });
-    const res = await fetch('https://hyundai-it.demo.beeclover.pro/gravityformsapi/forms/1/submissions', {
-      method: 'POST',
-      body: JSON.stringify({ input_values: overrideData }),
-      headers: {
-        'Content-Type': 'application/json',
+
+    const formData = new FormData();
+    _.forOwn(overrideData, (value, key) => {
+      formData.set(key, value as string);
+    });
+
+    const res = await fetch(
+      `${process.env.DOMAIN}/wp-json/gf/v2/forms/1/submissions`,
+      {
+        method: 'POST',
+        body: formData,
       }
-    })
+    )
       .then(res => res.json())
       .catch(error => {
         console.log(error)
       });
 
     /**
-     * https://docs.gravityforms.com/web-api/#status-codes
-     * 
-     * Successful requests will generate either a 200 (OK) or 201 (resource created) status code.
-     * Accepted but unfinished requests will generate a 202 (accepted) status code.
-     *
-     * Illegal or illogical requests, will result in a 400 (bad request) status code.
-     *
-     * Unauthenticated or unauthorized requests will receive the 401 (not authorized) status code.
-     *
-     * Requests for non-existent resources will receive a 404 (not found) status code.
-     *
-     * Server errors will generate a 500 (server error) status code.
-     *
-     * Unsupported requests will receive the 501 (Not implemented) status code.
+     * https://docs.gravityforms.com/rest-api-v2/#h-post-forms-form-id-submissions
      */
-    // 정상적으로 요청이 되고 폼이 등록되었을때
-    if (res?.status === 200) {
-      setResponse(_.merge(response, { loading: false, status: 'success', message: res.response.confirmation_message }));
-    }
-
-    // 정상적으로 요청이 되었으나 폼이 등록되지 않았을때
-    if (!res || res.status === 400 || res.status === 404 || res.status === 500) {
+    if (res?.is_valid) {
+      setResponse(_.merge(response, { loading: false, status: 'success', message: res.confirmation_message }));
+    } else {
       setResponse(_.merge(response, { loading: false, status: 'error', message: '죄송합니다<br/>시스템에 문제가 생겼습니다.' }));
     }
   };
@@ -101,7 +94,7 @@ export default function App() {
   return (
     <>
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
-      <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard relative">
+      <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard relative" encType="multipart/form-data">
         <LoadingWrap isOpen={response.loading || response.status !== ''}>
           <div tw="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-50 z-50 text-center">
             <div>
@@ -295,7 +288,7 @@ export default function App() {
         </div>
       </form>
 
-      {process.env.NODE_ENV !== "production" && (
+      {process.env.NODE_ENV !== "1production" && (
         <div tw="fixed bottom-0 right-0 p-[6px] bg-red-200 grid text-[12px]">
           <button
             type="button"
@@ -337,3 +330,13 @@ const SearchBarWrap = styled.div`
     height: 100%;
   }
 `
+
+// render
+const container = document.getElementById('root')
+const root = createRoot(container!)
+root.render(
+  <React.StrictMode>
+    <GlobalStyle />
+    <App />
+  </React.StrictMode>,
+)

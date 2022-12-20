@@ -9,7 +9,7 @@ dotenv.config()
 module.exports = function webpackConfig(env, args) {
   return {
     entry: {
-      main: path.join(__dirname, 'src/index.tsx'),
+      'purchasep-inquiry': path.join(__dirname, 'src/PurchaseInquiry.tsx'),
     },
     output: {
       filename: '[name].js',
