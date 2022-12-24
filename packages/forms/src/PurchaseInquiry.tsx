@@ -120,7 +120,7 @@ export default function App() {
         <div>
           <Heading>개인정보 수집 및 이용약관</Heading>
           <Spacer tw="h-[30px]" />
-          <div tw="p-[45px] border border-[#707070]">
+          <div tw="p-[45px] border border-[#707070] max-h-[calc(11em+90px)] overflow-auto" >
             ㈜현대아이티는 기업/단체 및 개인의 정보 수집 및 이용 등 처리에 있어<br />
             아래의 사항을 관계법령에 따라 아래와 같이 고지하고 안내해 드립니다.<br />
             <br />
@@ -288,7 +288,7 @@ export default function App() {
         </div>
       </form>
 
-      {process.env.NODE_ENV !== "1production" && (
+      {process.env.NODE_ENV !== "production" && (
         <div tw="fixed bottom-0 right-0 p-[6px] bg-red-200 grid text-[12px]">
           <button
             type="button"

@@ -29,7 +29,10 @@ add_action( 'wp_footer', function () {
     // Specific page
     global $post;
     if (!empty($post->ID) && $post->ID === 49) {
-      wp_enqueue_script('구매문의 React', asset('dist/forms/main.js')->uri(), false, null);
+      wp_enqueue_script('구매문의 React', asset('dist/forms/purchasep-inquiry.js')->uri(), false, null);
+    }
+    if (!empty($post->ID) && $post->ID === 574) {
+      wp_enqueue_script('a/s문의 React', asset('dist/forms/as-inquiry.js')->uri(), false, null);
     }
 } );
 
