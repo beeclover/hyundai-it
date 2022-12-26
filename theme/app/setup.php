@@ -26,15 +26,22 @@ add_action('wp_enqueue_scripts', function () {
  * @return void
  */
 add_action( 'wp_footer', function () {
+} );
+
+add_action('wp_head', function () {
     // Specific page
     global $post;
     if (!empty($post->ID) && $post->ID === 49) {
-      wp_enqueue_script('구매문의 React', asset('dist/forms/purchasep-inquiry.js')->uri(), false, null);
+      echo '<script type="module" crossorigin src="'. asset('dist/forms/app-purchasep-inquiry.js')->uri() .'"></script>';
     }
     if (!empty($post->ID) && $post->ID === 574) {
-      wp_enqueue_script('a/s문의 React', asset('dist/forms/as-inquiry.js')->uri(), false, null);
+      echo '<script type="module" crossorigin src="'. asset('dist/forms/app-as-inquiry.js')->uri() .'"></script>';
     }
-} );
+    // chunk
+    if (!empty($post->ID) && ($post->ID === 49 || $post->ID === 574)) {
+      echo '<link rel="modulepreload" crossorigin href="'. asset('dist/forms/chunk-PrivacyPolicy.js')->uri() .'">';
+    }
+});
 
 /**
  * Register the theme assets with the block editor.

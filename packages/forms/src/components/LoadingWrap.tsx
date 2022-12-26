@@ -11,6 +11,7 @@ const LoadingWrap = ({ isOpen, children }: LoadingWrapProps) => {
   return (
     <ClassNames>
       {({ css }) => (
+        // @ts-ignore
         <Transition
           show={isOpen}
           as={Fragment}
