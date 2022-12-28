@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
     screens: {
@@ -11,6 +12,9 @@ module.exports = {
       container: {
         center: true,
         padding: "20px",
+        screens: {
+          '2xl': '1240px',
+        }
       },
       fontFamily: {
         ng: ["niveau-grotesk"],
