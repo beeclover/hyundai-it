@@ -32,26 +32,28 @@ export default function App() {
     setValue,
     handleSubmit,
     watch,
-  } = useForm<Inputs>({ mode: 'onChange' });
+  } = useForm<Inputs>({
+    mode: 'onChange',
+    defaultValues: {
+      'privacy-policy': false,
+      'your-name': '',
+      'your-phone': '',
+      'your-message': '',
+      'your-subject': '',
+    }
+  });
 
   // ======================
   // 제출
   // ======================
-  const [response, setResponse] = useState({
-    loading: false,
-    status: '' as 'success' | 'error' | '',
-    message: `<div id='gform_confirmation_wrapper_1' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_1' class='gform_confirmation_message_1 gform_confirmation_message'>연락 해주셔서 감사합니다! 곧 연락드리겠습니다.<\/div><\/div>`,
-  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setResponse(_.merge(response, { loading: true }));
+    setLoading(true);
     // 키 매칭
     let overrideData = _.mapKeys(data, (_value, key) => {
-      if (key === 'privacy-policy') return 'input_3.1';
-      if (key === 'your-name') return 'input_4';
-      if (key === 'your-email') return 'input_9';
-      if (key === 'your-phone') return 'input_8';
-      if (key === 'your-subject') return 'input_6';
-      if (key === 'your-message') return 'input_7';
+      if (key === 'privacy-policy') return 'acceptance-596';
       return key;
     })
     // 키 매칭
@@ -65,8 +67,10 @@ export default function App() {
       formData.set(key, value as string);
     });
 
+    const domain = import.meta.env.NODE_ENV === 'production' ? '' : import.meta.env.VITE_DOMAIN;
+
     const res = await fetch(
-      `${process.env.DOMAIN}/wp-json/gf/v2/forms/1/submissions`,
+      `${domain}/wp-json/gf/v2/forms/1/submissions`,
       {
         method: 'POST',
         body: formData,
@@ -77,38 +81,37 @@ export default function App() {
         console.log(error)
       });
 
-    /**
-     * https://docs.gravityforms.com/rest-api-v2/#h-post-forms-form-id-submissions
-     */
-    if (res?.is_valid) {
-      setResponse(_.merge(response, { loading: false, status: 'success', message: res.confirmation_message }));
+    if (res?.status !== "validation_failed") {
+      setMessage(res.message)
     } else {
-      setResponse(_.merge(response, { loading: false, status: 'error', message: '죄송합니다<br/>시스템에 문제가 생겼습니다.' }));
+      setMessage('죄송합니다<br/>시스템에 문제가 생겼습니다.');
     }
+    setLoading(false);
+    setStatus(res.status);
   };
 
   return (
     <>
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard relative" encType="multipart/form-data">
-        <LoadingWrap isOpen={response.loading || response.status !== ''}>
+        <LoadingWrap isOpen={loading || status !== ''}>
           <div tw="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-50 z-50 text-center">
             <div>
               {/* 로딩중일 때만 보여진다. */}
-              <div css={[response.status === '' ? tw`block` : tw`hidden`]}>
+              <div css={[loading ? tw`block` : tw`hidden`]}>
                 <ReactLoading type="bubbles" color="#3c92ff" />
               </div>
               <div tw="flex flex-col items-center gap-[24px]">
                 {/* 결과값이 200 */}
-                <SuccessAnimation isOpen={response.status === 'success'} />
+                <SuccessAnimation isOpen={status === 'mail_sent'} />
                 {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-                {response.status === 'success' && <div tw="text-[18px]" dangerouslySetInnerHTML={{ __html: response.message }} />}
+                {status !== '' && <div tw="text-[18px]" dangerouslySetInnerHTML={{ __html: message }} />}
               </div>
               <div tw="flex flex-col items-center gap-[24px]">
                 {/* 결과값이 400, 404, 401, 500 일때 */}
-                <ErrorAnimation isOpen={response.status === 'error'} />
+                <ErrorAnimation isOpen={status === 'validation_failed'} />
                 {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-                {response.status === 'error' && <div tw="text-[18px] text-red-400" dangerouslySetInnerHTML={{ __html: response.message }} />}
+                {status === 'validation_failed' && <div tw="text-[18px] text-red-400" dangerouslySetInnerHTML={{ __html: message }} />}
               </div>
             </div>
           </div>

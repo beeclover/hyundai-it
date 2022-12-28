@@ -69,8 +69,10 @@ export default function App() {
       formData.set(key, value as string);
     });
 
+    const domain = import.meta.env.NODE_ENV === 'production' ? '' : import.meta.env.VITE_DOMAIN;
+
     const res = await fetch(
-      `${import.meta.env.VITE_DOMAIN}/wp-json/contact-form-7/v1/contact-forms/579/feedback`,
+      `${domain}/wp-json/contact-form-7/v1/contact-forms/579/feedback`,
       {
         method: 'POST',
         body: formData,
@@ -81,9 +83,6 @@ export default function App() {
         console.log(error)
       });
 
-    /**
-     * https://docs.gravityforms.com/rest-api-v2/#h-post-forms-form-id-submissions
-     */
     if (res?.status !== "validation_failed") {
       setMessage(res.message)
     } else {
