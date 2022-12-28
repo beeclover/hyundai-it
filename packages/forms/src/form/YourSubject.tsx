@@ -11,7 +11,6 @@ const YourSubject = ({ control, ...props }: YourSubjectProps) => {
     name: 'your-subject',
     rules: {
       required: true,
-      pattern: /^[가-힣]{2,4}$/,
     }
   })
   const [value, setValue] = React.useState(String(field.value));
