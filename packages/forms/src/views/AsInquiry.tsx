@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import GlobalStyle from 'styles/GlobalStyle'
 import Spacer from "components/Spacer"
@@ -10,13 +10,13 @@ import LoadingWrap from "components/LoadingWrap"
 import SuccessAnimation from "components/SuccessAnimation"
 import ErrorAnimation from "components/ErrorAnimation"
 import ReactLoading from "react-loading"
-import Require from 'form/styleRequire'
 import YourName from 'form/YourName'
 import YourPhone from 'form/YourPhone'
 import YourEmail from 'form/YourEmail'
 import YourSubject from 'form/YourSubject'
 import YourMessage from 'form/YourMessage'
 import PrivacyPolicy from 'form/PrivacyPolicy'
+import Files from 'form/Files'
 
 export type Inputs = {
   'privacy-policy': boolean,
@@ -25,13 +25,12 @@ export type Inputs = {
   'your-phone': string,
   'your-message': string,
   'your-subject': string,
-  'file-1': FileList | File | null,
+  'files': FileList | File | null,
 };
 
 export default function App() {
   const {
     control,
-    register,
     setValue,
     handleSubmit,
     watch,
@@ -43,37 +42,27 @@ export default function App() {
       'your-phone': '',
       'your-message': '',
       'your-subject': '',
-      'file-1': null,
+      'files': null,
     }
   });
 
   // ======================
   // 제출
   // ======================
-  const [response, setResponse] = useState({
-    loading: false,
-    status: '' as 'success' | 'error' | '',
-    message: `<div id='gform_confirmation_wrapper_1' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_1' class='gform_confirmation_message_1 gform_confirmation_message'>연락 해주셔서 감사합니다! 곧 연락드리겠습니다.<\/div><\/div>`,
-  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setResponse(_.merge(response, { loading: true }));
+    setLoading(true);
     // 키 매칭
     let overrideData = _.mapKeys(data, (_value, key) => {
-      if (key === 'privacy-policy') return 'input_3.1';
-      if (key === 'your-name') return 'input_4';
-      if (key === 'your-email') return 'input_9';
-      if (key === 'your-phone') return 'input_8';
-      if (key === 'your-subject') return 'input_6';
-      if (key === 'your-message') return 'input_7';
-      if (key === 'file-1') return 'input_11';
+      if (key === 'privacy-policy') return 'acceptance-596';
       return key;
     })
-    // 키 매칭
-    overrideData = _.mapValues(overrideData, (_value, key) => {
-      if (key === 'input_3.1' && _value) return '동의함';
-      if (key === 'input_11' && _value) return (_value as FileList)[0];
-      return _value;
-    });
+
+    // 파일 분리
+    const files = ['file-1', 'file-2', 'file-3', 'file-4', 'file-5'];
+    overrideData = _.merge(overrideData, _.zipObject(files, (data.files) as FileList));
 
     const formData = new FormData();
     _.forOwn(overrideData, (value, key) => {
@@ -81,7 +70,7 @@ export default function App() {
     });
 
     const res = await fetch(
-      `${process.env.DOMAIN}/wp-json/gf/v2/forms/4/submissions`,
+      `${import.meta.env.VITE_DOMAIN}/wp-json/contact-form-7/v1/contact-forms/579/feedback`,
       {
         method: 'POST',
         body: formData,
@@ -95,35 +84,37 @@ export default function App() {
     /**
      * https://docs.gravityforms.com/rest-api-v2/#h-post-forms-form-id-submissions
      */
-    if (res?.is_valid) {
-      setResponse(_.merge(response, { loading: false, status: 'success', message: res.confirmation_message }));
+    if (res?.status !== "validation_failed") {
+      setMessage(res.message)
     } else {
-      setResponse(_.merge(response, { loading: false, status: 'error', message: '죄송합니다<br/>시스템에 문제가 생겼습니다.' }));
+      setMessage('죄송합니다<br/>시스템에 문제가 생겼습니다.');
     }
+    setLoading(false);
+    setStatus(res.status);
   };
 
   return (
     <>
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)} tw="font-pretendard relative" encType="multipart/form-data">
-        <LoadingWrap isOpen={response.loading || response.status !== ''}>
+        <LoadingWrap isOpen={loading || status !== ''}>
           <div tw="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-50 z-50 text-center">
             <div>
               {/* 로딩중일 때만 보여진다. */}
-              <div css={[response.status === '' ? tw`block` : tw`hidden`]}>
+              <div css={[loading ? tw`block` : tw`hidden`]}>
                 <ReactLoading type="bubbles" color="#3c92ff" />
               </div>
               <div tw="flex flex-col items-center gap-[24px]">
                 {/* 결과값이 200 */}
-                <SuccessAnimation isOpen={response.status === 'success'} />
+                <SuccessAnimation isOpen={status === 'mail_sent'} />
                 {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-                {response.status === 'success' && <div tw="text-[18px]" dangerouslySetInnerHTML={{ __html: response.message }} />}
+                {status !== '' && <div tw="text-[18px]" dangerouslySetInnerHTML={{ __html: message }} />}
               </div>
               <div tw="flex flex-col items-center gap-[24px]">
                 {/* 결과값이 400, 404, 401, 500 일때 */}
-                <ErrorAnimation isOpen={response.status === 'error'} />
+                <ErrorAnimation isOpen={status === 'validation_failed'} />
                 {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-                {response.status === 'error' && <div tw="text-[18px] text-red-400" dangerouslySetInnerHTML={{ __html: response.message }} />}
+                {status === 'validation_failed' && <div tw="text-[18px] text-red-400" dangerouslySetInnerHTML={{ __html: message }} />}
               </div>
             </div>
           </div>
@@ -159,25 +150,8 @@ export default function App() {
             </div>
             <div tw="col-span-2 h-px bg-[#d5d5d5] first:mb-[8px] last:mt-[8px]" />
             <div tw="col-span-2">
-              <div tw="grid grid-cols-[90px_1fr]">
-                <label tw="mt-[0.5em]" htmlFor="message">
-                  <div tw="flex items-center">
-                    <Require>*</Require>
-                    첨부파일
-                  </div>
-                </label>
-                <div tw="grid gap-y-[4px]">
-                  <div tw="flex">
-                    <div tw="flex-1"></div>
-                    <button type="button" tw="bg-[#5a5a5a]" >파일찾기</button>
-                  </div>
-                  <div>
-                    <input type="file" id="file-1" {...register('file-1')} />
-                  </div>
-                </div>
-              </div>
+              <Files control={control} tw="grid grid-cols-[90px_1fr]" />
             </div>
-            <div tw="col-span-2 h-px bg-[#d5d5d5] first:mb-[8px] last:mt-[8px]" />
           </div>
           <Spacer tw="h-[60px]" />
           <div tw="flex justify-center">
