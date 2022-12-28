@@ -3,7 +3,7 @@ import Spacer from 'components/Spacer';
 import _ from 'lodash';
 import { DOMAttributes, useLayoutEffect, useState } from 'react'
 import { useController } from 'react-hook-form';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import Modal from 'react-modal';
 import Require from './styleRequire'
 
