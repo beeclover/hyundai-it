@@ -10,6 +10,7 @@ const ErrorAnimation = ({ isOpen = false, ...props }: ErrorAnimationProps) => {
   return (
     <ClassNames>
       {({ css }) => (
+        // @ts-ignore
         <Transition
           show={isOpen}
           as={Fragment}

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('partials.header-archive')
+  <x-page-header title="{!! $title !!}" thumbnail="{!! $thumbnail !!}" parent_menu="{!! $parent_menu !!}" />
   @if (!have_posts())
     <x-C404 />
   @else
