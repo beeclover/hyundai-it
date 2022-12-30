@@ -9,7 +9,16 @@
   <div class="text-left w-full" >
     {!! $title !!}
   </div>
-  <a href="" class="bg-[#5a5a5a] text-white text-[14px] pt-[8px] pb-[10px] px-[20px] break-keep rounded-[4px] font-bold">
+  <a
+    @if($downloadLinkUrl == '')
+      x-data
+      :class="true && 'bg-opacity-50 cursor-not-allowed'"
+    @else
+      href="{!! $downloadLinkUrl !!}"
+      download=""
+    @endif
+    class="bg-[#5a5a5a] text-white text-[14px] pt-[8px] pb-[10px] px-[20px] break-keep rounded-[4px] font-bold"
+  >
     다운로드
   </a>
 </div>

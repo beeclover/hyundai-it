@@ -24,6 +24,7 @@ class DownloadPost extends Composer
       'id' => get_the_ID(),
       '분류' => $this->term('download-taxonomy'),
       '제품' => $this->term('product'),
+      'downloadLinkUrl' => $this->downloadLinkUrl()
     ];
   }
 
@@ -49,5 +50,11 @@ class DownloadPost extends Composer
     global $post;
     $term = get_the_terms($post, $slug)[0];
     return $term->name;
+  }
+
+  public function downloadLinkUrl()
+  {
+    $term = get_field_object('attachments');
+    return $term ? $term['value']['url'] : '';
   }
 }
