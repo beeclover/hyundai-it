@@ -2,7 +2,7 @@
 
 @section('content')
   <x-page-header title="{!! $title !!}" thumbnail="{!! $thumbnail !!}" parentMenu="{!! $parent_menu !!}" />
-  <div data-component="spacer" class="h-[90px]"></div>
+  <x-spacer class="h-[90px]" />
   <div class="container">
     {{-- head --}}
     @include('partials.archive-search')
@@ -21,7 +21,7 @@
       @endwhile
       {{-- row end --}}
     </div>
-    <div data-component="spacer" class="h-[60px]"></div>
+    <x-spacer class="h-[60px]" />
     {!! $pagination !!}
   </div>
 @endsection
