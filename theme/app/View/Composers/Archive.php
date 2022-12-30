@@ -28,12 +28,20 @@ class Archive extends Composer
     return [
       'title' => $this->title(),
       'pagination' => (new UI\Pagination())->render(),
+      'current_url' => $this->current_url(),
     ];
   }
 
   public function title()
   {
     return get_the_archive_title();
+  }
+
+  public function current_url()
+  {
+    global $wp;
+    $current_url = home_url( add_query_arg( array(), $wp->request ) );
+    return $current_url;
   }
 }
 
