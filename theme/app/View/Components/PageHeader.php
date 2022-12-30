@@ -17,9 +17,9 @@ class PageHeader extends Component
    * @param  string  $message
    * @return void
    */
-  public function __construct($parent_menu = '', $title = '')
+  public function __construct($parentMenu = '', $title = '')
   {
-        $this->parent_menu = $parent_menu;
+        $this->parent_menu = $parentMenu;
         $this->title = $title;
   }
 
