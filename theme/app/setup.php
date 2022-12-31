@@ -160,3 +160,18 @@ add_action('widgets_init', function () {
         'id' => 'sidebar-footer',
     ] + $config);
 });
+
+// acf
+// faq acf 옵션페이지 추가
+if( function_exists('acf_add_options_sub_page') ) {
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'faq',
+		'menu_title'	=> 'faq',
+		'parent_slug'	=> 'edit.php?post_type=faq',
+	));
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'casestudy',
+		'menu_title'	=> 'casestudy',
+		'parent_slug'	=> 'edit.php?post_type=casestudy',
+	));
+}
