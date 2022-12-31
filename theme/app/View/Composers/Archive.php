@@ -28,9 +28,10 @@ class Archive extends Composer
   {
     return [
       'title' => $this->title(),
+      'post_type' => get_post_type(),
       'pagination' => (new UI\Pagination())->render(),
       'current_url' => $this->current_url(),
-      'parent_menu' => (new NAV\Menu())->my_menu_parent('primary_navigation')
+      'parent_menu' => (new NAV\Menu())->my_menu_parent()
     ];
   }
 

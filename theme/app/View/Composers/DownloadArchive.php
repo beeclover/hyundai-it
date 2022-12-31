@@ -24,7 +24,7 @@ class DownloadArchive extends Composer
     return [
       'title' => $this->title(),
       'thumbnail' => $this->thumbnail(),
-      'parent_menu' => (new NAV\Menu())->my_menu_parent('primary_navigation')
+      'parent_menu' => (new NAV\Menu())->my_menu_parent()
     ];
   }
 
