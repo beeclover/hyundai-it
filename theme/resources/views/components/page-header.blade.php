@@ -11,7 +11,7 @@
       <div class="leading-none text-center text-white">
         <div class="text-[26px] font-extrabold">{!! $parent_menu !!}</div>
         <div class="h-[12px]"></div>
-        <h1 class="text-[47px] font-extrabold">{!! $title !!}</h1>
+        <h1 class="text-[47px] font-extrabold uppercase">{!! $title !!}</h1>
       </div>
     </div>
   </div>
