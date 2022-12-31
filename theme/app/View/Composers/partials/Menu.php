@@ -36,6 +36,11 @@ class Menu
                 }
             }
 
+            // 메뉴에 포함되어있지 않을때
+            if (empty($breadcrumbs)) {
+                return '';
+            }
+
             return $breadcrumbs[0];
         }
         return '';
