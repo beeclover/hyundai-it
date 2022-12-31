@@ -9,6 +9,9 @@ module.exports = {
       "2xl": "1536px",
     },
     extend: {
+      colors: {
+        primary: '#3c92ff'
+      },
       container: {
         center: true,
         padding: "20px",

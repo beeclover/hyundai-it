@@ -1,0 +1,34 @@
+.content-signle-casestudy {
+  .entry-content {
+    >* {
+      @apply container;
+    }
+
+    :where(.wp-block-columns.is-layout-flex) {
+      @apply gap-[10px];
+    }
+
+    >p {
+      max-width: 800px;
+      min-height: 0.1px;
+    }
+
+    >figure {
+      img {
+        width: 100%;
+      }
+    }
+
+    .wp-block-columns {
+      .wp-block-column {
+        .wp-block-image {
+          margin-bottom: 0;
+        }
+
+        figure+figure {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
