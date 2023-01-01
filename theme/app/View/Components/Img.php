@@ -50,7 +50,7 @@ class Img extends Component
     $src = explode('.', $this->src);
     $ext = $src[count($src) - 1];
     if ($ext === 'png') {
-      array_push($this->soruces, $this->srcSet($this->src));
+      array_push($this->sources, $this->srcSet($this->src));
     }
     if ($ext === 'webp') {
       // webp sources 추가

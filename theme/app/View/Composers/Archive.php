@@ -5,6 +5,7 @@ namespace App\View\Composers;
 use Roots\Acorn\View\Composer;
 
 use WP\Archive\UI;
+use WP\NAV;
 
 class Archive extends Composer
 {
@@ -27,8 +28,10 @@ class Archive extends Composer
   {
     return [
       'title' => $this->title(),
+      'post_type' => get_post_type(),
       'pagination' => (new UI\Pagination())->render(),
       'current_url' => $this->current_url(),
+      'parent_menu' => (new NAV\Menu())->my_menu_parent()
     ];
   }
 

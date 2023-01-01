@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-  <x-page-header title="{!! $title !!}" thumbnail="{!! $thumbnail !!}" parentMenu="{!! $parent_menu !!}" />
+  <x-page-header
+    title="{!! $title !!}"
+    thumbnail="{!! $thumbnail !!}"
+    parentMenu="{!! $parent_menu !!}"
+    postType="{!! $post_type !!}"
+  />
   <x-spacer class="h-[90px]" />
   <div class="container">
     {{-- head --}}
-    @include('partials.archive-search')
+    @include('partials.header-search')
     <x-spacer class="h-[30px]" />
     {{-- head end --}}
     {{-- content --}}

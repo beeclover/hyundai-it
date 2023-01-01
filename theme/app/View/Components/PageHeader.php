@@ -9,6 +9,7 @@ class PageHeader extends Component
 
     public $parent_menu;
     public $title;
+    public $post_type;
 
   /**
    * Create the component instance.
@@ -17,10 +18,11 @@ class PageHeader extends Component
    * @param  string  $message
    * @return void
    */
-  public function __construct($parentMenu = '', $title = '')
+  public function __construct($parentMenu = '', $title = '', $postType = '')
   {
         $this->parent_menu = $parentMenu;
         $this->title = $title;
+        $this->post_type = $postType;
   }
 
   public function render()
