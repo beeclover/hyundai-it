@@ -15,6 +15,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
+      
+      - name: theme, packages tailwind yarn link
+        run: |
+          cd packages/tailwindcss
+          yarn link
+          cd ../../theme
+          yarn link "@hyundai-it/tailwindcss"
 
       - name: 🔨 (node dependencies) theme yarn build
         run: |
