@@ -14,5 +14,5 @@ picture로 묶어야 한다.
       <source srcset="{{ $source['srcset'] }}" type="{{ $source['type'] }}">
     @endforeach
 @endif
-    <img src="{{ $src }}" alt="{{ $alt }}" class="{{ $class }}">
+    <img src="{{ $src }}" alt="{{ $alt }}" class="{{ $class }}" draggable="false">
 @if (count($sources) > 0) </picture> @endif

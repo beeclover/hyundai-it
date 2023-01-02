@@ -1,4 +1,4 @@
-<div class="h-[55px]"></div>
+<div class="h-[60px]"></div>
 <div class="container flex justify-center">
   <a href="">
     <svg xmlns="http://www.w3.org/2000/svg" width="44.396" height="55.707" viewBox="0 0 44.396 55.707">
