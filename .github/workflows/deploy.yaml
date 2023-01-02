@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  monorepo:
     runs-on: ubuntu-latest
-    name: 🚛 소스코드 업데이트 & 빌드파일 배포
+    name: 🚧 packages, app 빌드
     steps:
       - uses: actions/checkout@v3
 
@@ -15,7 +15,41 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
-      
+
+      - name: 🔨 (node dependencies) monorepo yarn build
+        run: |
+          yarn
+          yarn install
+
+      - name: 🔨 (node dependencies) monorepo yarn workspace build
+        run: |
+          yarn
+          yarn workspace homepage build
+          yarn workspace forms build
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: theme-buile-result
+          path: ./theme/public/dist
+  deploy:
+    runs-on: ubuntu-latest
+    name: 🚛 소스코드 업데이트 & 빌드파일 배포
+    needs: [monorepo]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 🏗 setup-node (v18.x)
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+          
+      # build의 아티펙트 공유
+      - uses: actions/download-artifact@master
+        with:
+          name: theme-buile-result
+          path: ./theme/public/dist
+
+      # "@hyundai-it/tailwindcss"는 빌드하지 않아되는 패키지
       - name: theme, packages tailwind yarn link
         run: |
           cd packages/tailwindcss
@@ -28,12 +62,7 @@ jobs:
           cd theme
           yarn
           yarn install
-
-      - name: 🔨 (node dependencies) monorepo yarn workspace build
-        run: |
-          yarn
-          yarn workspace homepage build
-          yarn workspace forms build
+          yarn build
 
       # Caching dependencies for faster builds
       - name: Cache Composer dependencies
@@ -63,7 +92,7 @@ jobs:
 
   noti:
     name: 🦅 빌드 결과 노티
-    needs: [deploy]
+    needs: [deploy, monorepo]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
