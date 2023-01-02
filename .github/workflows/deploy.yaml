@@ -54,6 +54,10 @@ jobs:
           name: theme-buile-result
           path: ./theme/public/dist
 
+      - name: 🔨 (node dependencies) monorepo yarn install
+        run: |
+          yarn install
+
       # "@hyundai-it/tailwindcss"는 빌드하지 않아되는 패키지
       - name: theme, packages tailwind yarn link
         run: |
