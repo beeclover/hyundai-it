@@ -47,17 +47,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
-          
-      # build의 아티펙트 공유
-      - uses: actions/download-artifact@master
-        with:
-          name: theme-buile-result
-          path: ./theme/public/dist
-      
-      - name: check
-        run: |
-          cd theme/public
-          ls -al
 
       - name: 🔨 (node dependencies) monorepo yarn install
         run: |
@@ -77,6 +66,17 @@ jobs:
           yarn
           yarn install
           yarn build
+
+      # build의 아티펙트 공유
+      - uses: actions/download-artifact@master
+        with:
+          name: theme-buile-result
+          path: ./theme/public/dist
+      
+      - name: check
+        run: |
+          cd theme/public
+          ls -al
 
       # Caching dependencies for faster builds
       - name: Cache Composer dependencies
