@@ -62,8 +62,9 @@ class Img extends Component
       );
 
       $this->src = str_replace('.webp', '.png', $this->src);
-      $this->src = asset($this->src)->uri();
     }
+
+    $this->src = $this->src();
   }
 
   /**
@@ -103,5 +104,14 @@ class Img extends Component
         'type' => "image/{$ext}",
       ];
     }
+  }
+
+  public function src()
+  {
+    // src의 값에 http 또는 https가 포함되어 있으면 그냥 src를 반환한다.
+    if (strpos($this->src, 'http') !== false) {
+      return $this->src;
+    }
+    return asset($this->src)->uri();
   }
 }
