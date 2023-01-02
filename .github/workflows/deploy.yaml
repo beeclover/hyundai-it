@@ -53,6 +53,11 @@ jobs:
         with:
           name: theme-buile-result
           path: ./theme/public/dist
+      
+      - name: check
+        run: |
+          cd theme/public
+          ls -al
 
       - name: 🔨 (node dependencies) monorepo yarn install
         run: |
