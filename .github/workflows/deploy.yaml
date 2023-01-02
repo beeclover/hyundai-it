@@ -48,10 +48,6 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: 🔨 (node dependencies) monorepo yarn install
-        run: |
-          yarn install
-
       # "@hyundai-it/tailwindcss"는 빌드하지 않아되는 패키지
       - name: theme, packages tailwind yarn link
         run: |
@@ -73,11 +69,6 @@ jobs:
           name: theme-buile-result
           path: ./theme/public/dist
       
-      - name: check
-        run: |
-          cd theme/public
-          ls -al
-
       # Caching dependencies for faster builds
       - name: Cache Composer dependencies
         uses: actions/cache@v3
