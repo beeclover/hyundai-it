@@ -1,7 +1,7 @@
 <div class="relative">
   {{-- background image --}}
   @if(empty($thumbnail) || $thumbnail == '')
-    @php($post_type = isset($post_type) ? $post_type : 'faq')
+    @php($post_type = !empty($post_type) ? $post_type : 'faq')
     <x-img src="images/header-archive-{!! $post_type !!}.webp" class="absolute w-full h-full object-cover" />
   @else
     <img src="{!! $thumbnail !!}" />
