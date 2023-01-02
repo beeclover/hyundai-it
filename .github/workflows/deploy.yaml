@@ -16,9 +16,8 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: 🔨 (node dependencies) monorepo yarn build
+      - name: 🔨 (node dependencies) monorepo yarn install
         run: |
-          yarn
           yarn install
 
       - name: 🔨 (node dependencies) forms yarn workspace build
