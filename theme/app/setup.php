@@ -16,6 +16,7 @@ use function Roots\bundle;
 add_action('wp_enqueue_scripts', function () {
     bundle('app')->enqueue();
 
+    wp_enqueue_style('niveau-grotesk', 'https://use.typekit.net/txi1zak.css', false, null);
     wp_enqueue_style('pretendard', asset('fonts/pretendard/dist/web/static/pretendard.css')->uri(), false, null);
     wp_enqueue_style('iconscout-font', 'https://unicons.iconscout.com/release-pro/v4.0.0/css/thinline.css?key=283fbb00-218c-11ec-92db-0242ac140003', false, null);
 }, 100);
