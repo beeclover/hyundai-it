@@ -15,6 +15,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
+          
+      - name: 패지키만 빌드하기위해 theme 제거
+        run: |
+          rm -rf theme
 
       - name: 🔨 (node dependencies) monorepo yarn install
         run: |
