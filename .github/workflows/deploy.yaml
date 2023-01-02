@@ -21,11 +21,13 @@ jobs:
           yarn
           yarn install
 
-      - name: 🔨 (node dependencies) monorepo yarn workspace build
+      - name: 🔨 (node dependencies) forms yarn workspace build
         run: |
-          yarn
-          yarn workspace homepage build
           yarn workspace forms build
+
+      - name: 🔨 (node dependencies) homepage yarn workspace build
+        run: |
+          yarn workspace homepage build
 
       - uses: actions/upload-artifact@master
         with:
