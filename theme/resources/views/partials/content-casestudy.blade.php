@@ -31,7 +31,7 @@
     <ul class="flex gap-x-[2px]">
       @foreach ($tags as $tag)
         <li>
-          <a href="{!! $tag->link !!}" class="text-[14px] text-[#3c92ff] font-bold">
+          <a href="{!! $tag->link !!}" class="text-[14px] text-primary font-bold">
             #{!! $tag->name !!}
           </a>
         </li>

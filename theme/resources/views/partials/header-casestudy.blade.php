@@ -4,7 +4,7 @@
   class="flex flex-wrap gap-x-[24px] gap-y-[8px] justify-center text-[20px]"
 >
   <li>
-    <a href="/newsroom/casestudy" class="font-bold hover:text-[#78aff7]" :class="{'text-[#3c92ff]': current_term_name === ''}">#전체</a>
+    <a href="/newsroom/casestudy" class="font-bold hover:text-[#78aff7]" :class="{'text-primary': current_term_name === ''}">#전체</a>
   </li>
   @foreach(get_terms(array(
     'taxonomy' => 'casestudy-tag',
@@ -12,7 +12,7 @@
     'orderby' => 'name',
   )) as $term)
     <li>
-      <a href="/newsroom/casestudy/{!! $term->slug !!}" class="font-bold hover:text-[#78aff7]" :class="{'text-[#3c92ff]': current_term_name === '{!! $term->name !!}'}">#{!! $term->name !!}</a>
+      <a href="/newsroom/casestudy/{!! $term->slug !!}" class="font-bold hover:text-[#78aff7]" :class="{'text-primary': current_term_name === '{!! $term->name !!}'}">#{!! $term->name !!}</a>
     </li>
   @endforeach
 </ul>
@@ -27,7 +27,7 @@
   </div>
 </form>
 <div class="py-[70px] text-center border-b border-black border-opacity-20">
-  <h2 class="text-[44px] font-extrabold text-[#3c92ff]">
+  <h2 class="text-[44px] font-extrabold text-primary">
     @if(isset($current_term_name))
       #{!! $current_term_name !!}
     @else
