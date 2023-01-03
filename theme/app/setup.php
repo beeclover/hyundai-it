@@ -33,7 +33,7 @@ add_action('wp_head', function () {
     // Specific page
     global $post;
     if (!empty($post->ID) && $post->ID === 49) {
-      echo '<script type="module" crossorigin src="'. asset('dist/forms/app-purchasep-inquiry.js')->uri() .'"></script>';
+      echo '<script type="module" crossorigin src="'. asset('dist/forms/app-purchase-inquiry.js')->uri() .'"></script>';
     }
     if (!empty($post->ID) && $post->ID === 574) {
       echo '<script type="module" crossorigin src="'. asset('dist/forms/app-as-inquiry.js')->uri() .'"></script>';
