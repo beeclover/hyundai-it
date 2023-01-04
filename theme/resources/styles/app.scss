@@ -7,7 +7,9 @@
 @import 'components/header';
 
 body {
-  &.post-type-archive-casestudy {
+
+  &.post-type-archive-casestudy,
+  &.post-type-archive-howwedo {
     background-color: #F5F5F5;
   }
 }
