@@ -32,14 +32,14 @@ add_action( 'wp_footer', function () {
 add_action('wp_head', function () {
     // Specific page
     global $post;
-    if (!empty($post->ID) && $post->ID === 49) {
+    if (!empty($post->ID) && $post->ID === 920) {
       echo '<script type="module" crossorigin src="'. asset('dist/forms/app-purchase-inquiry.js')->uri() .'"></script>';
     }
-    if (!empty($post->ID) && $post->ID === 574) {
+    if (!empty($post->ID) && $post->ID === 917) {
       echo '<script type="module" crossorigin src="'. asset('dist/forms/app-as-inquiry.js')->uri() .'"></script>';
     }
     // chunk
-    if (!empty($post->ID) && ($post->ID === 49 || $post->ID === 574)) {
+    if (!empty($post->ID) && ($post->ID === 920 || $post->ID === 917)) {
       echo '<link rel="modulepreload" crossorigin href="'. asset('dist/forms/chunk-PrivacyPolicy.js')->uri() .'">';
     }
 });

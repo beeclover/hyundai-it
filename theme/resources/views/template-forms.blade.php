@@ -1,11 +1,16 @@
 {{--
   Template Name: Forms
+  Template Post Type: support, purchase
 --}}
 
 @extends('layouts.app')
 
 @section('content')
-  <x-page-header />
+  <x-page-header
+    title="{!! $header_title !!}"
+    parentMenu="{!! $parent_menu !!}"
+    postType="{!! $post_type !!}"
+  />
   <div class="container">
     <div class="h-[90px]"></div>
     <div id="root"></div>
