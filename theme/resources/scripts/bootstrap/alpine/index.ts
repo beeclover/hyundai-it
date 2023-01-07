@@ -2,10 +2,12 @@ import Alpine from 'alpinejs'
 import collapse from '@alpinejs/collapse'
 // data
 import faq from './faq'
+import menu from './menu'
 
 
 const store = () => {
   document.addEventListener('alpine:init', () => {
+    menu
   })
 }
 

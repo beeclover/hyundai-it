@@ -41,3 +41,30 @@ header#gnb {
     }
   }
 }
+
+.header__nav {
+  a {
+    @apply uppercase
+  }
+
+  .menu-item-has-children {
+    @apply flex flex-col gap-y-[43px];
+
+    >a {
+      @apply cursor-default pointer-events-none;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    >.sub-menu {
+      @apply flex flex-col gap-y-[0.8em];
+
+      font-size: 18px;
+
+      a[href='#'] {
+        @apply cursor-default opacity-25 pointer-events-none;
+      }
+    }
+  }
+
+}

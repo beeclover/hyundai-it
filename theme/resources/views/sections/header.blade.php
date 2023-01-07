@@ -16,16 +16,14 @@
         <path d="M180.885 1H163.431V5.345H169.871V20.998H174.459V5.345H180.887L180.885 1Z" fill="white"/>
       </svg>
     </a>
-    <div class="flex items-center">
-      <ul class="flex items-center">
-        <li>
-          ENG
-        </li>
-        <li>
-          SEARCH
-        </li>
-      </ul>
-      <button>menu</button>
+    <div class="flex items-center gap-x-[30px]">
+      <a href="#">ENG</a>
+      <a href="#">SEARCH</a>
+      <button type="button" @click="$store.menu.open()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
     </div>
     {{-- @if (has_nav_menu('primary_navigation'))
       <nav class="nav-primary" aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
@@ -34,3 +32,41 @@
     @endif --}}
   </div>
 </header>
+<div x-show="$store.menu.on" x-cloak class="fixed w-screen h-screen z-[9000] top-[var(--wp-bar, 0px)] left-0 bg-black">
+  <div class="container 2xl:max-w-[1920px] relative h-full">
+    <button type="button" @click="$store.menu.close()" class="absolute right-[25px] top-[25px] z-10">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="27.999" viewBox="0 0 28 27.999">
+        <g data-name="그룹 32">
+            <path data-name="사각형 54" transform="rotate(45 .359 .867)" style="fill:#fff" d="M0 0h38.581v1.015H0z"/>
+            <path data-name="사각형 55" transform="rotate(135 13.85 6.158)" style="fill:#fff" d="M0 0h38.581v1.015H0z"/>
+        </g>
+      </svg>
+    </button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="212.288" viewBox="0 0 1920 212.288" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <g data-name="그룹 1" style="opacity:.05">
+        <path data-name="패스 1" d="M295.449 337.666v80.57h-88.6v-80.57h-48.632v212.219h48.636V464.5h88.6v85.384h48.666V337.666h-48.67z" transform="translate(-158.217 -337.597)" style="fill:#fff"/>
+        <path data-name="패스 2" d="m351.056 337.666-51.312 84.078-50.7-84.078h-57.431l83.736 138.726v73.492h48.7v-73.491l84.443-138.726h-57.436z" transform="translate(13.856 -337.597)" style="fill:#fff"/>
+        <path data-name="패스 3" d="M271.977 549.883c-12.859 0-22.98-4.208-30.424-11.86-7.383-7.684-11.505-18.269-11.505-31.565V337.664h48.666v155.529a10.7 10.7 0 0 0 10.828 10.458h66.848a10.69 10.69 0 0 0 10.859-10.458V337.664h48.635v168.793c0 13.3-3.968 23.881-11.5 31.565-7.383 7.652-17.566 11.86-30.424 11.86z" transform="translate(229.793 -337.609)" style="fill:#fff"/>
+        <path data-name="패스 4" d="M442.372 493.167c0 5.611-3.969 10.458-10.8 10.458H353.9V383.964h77.675c6.091 0 10.8 4.082 10.8 10.395zm37.192-143.574c-7.475-7.716-17.566-11.925-30.394-11.925h-144v212.189h144c12.828 0 22.919-4.209 30.394-11.861 7.414-7.685 11.444-18.238 11.444-31.566V381.095c0-13.36-4.03-23.786-11.444-31.5" transform="translate(635.584 -337.588)" style="fill:#fff"/>
+        <path data-name="사각형 2" transform="translate(1421.321 .066)" style="fill:#fff" d="M0 0h48.635v212.219H0z"/>
+        <path data-name="패스 5" d="M401.708 383.855s-10.182.51-10.182 11.159V438.5h88.6v-44.41s.307-10.139-10.983-10.139zm86.412-46.2c40.668 0 40.853 42.374 40.853 42.374v169.845h-48.851v-65.713h-88.6v65.713h-48.663V381.623c0-44.223 40.268-43.968 40.268-43.968z" transform="translate(839.171 -337.655)" style="fill:#fff"/>
+        <path data-name="패스 6" d="M453.406 337.655h-48.758v121.126a3.73 3.73 0 0 1-6.83 2.168L330.509 353.5a34.249 34.249 0 0 0-28.64-15.846c-18.919 0-34.239 15.942-34.239 35.614v176.668h48.6V428.587a3.684 3.684 0 0 1 3.691-3.793 3.573 3.573 0 0 1 3.138 1.785l67.37 107.48a34.043 34.043 0 0 0 28.609 15.878c18.919 0 34.362-15.878 34.362-35.55z" transform="translate(432.804 -337.655)" style="fill:#fff"/>
+        <path data-name="사각형 3" transform="translate(1650.154 .066)" style="fill:#fff" d="M0 0h48.697v212.219H0z"/>
+        <path data-name="패스 7" d="M614.482 337.655H429.2v46.136h68.354v166.145h48.7V383.791h68.231z" transform="translate(1305.518 -337.654)" style="fill:#fff"/>
+      </g>
+    </svg>
+    <div class="w-full h-full flex flex-col justify-center items-center relative text-white">
+      @if (has_nav_menu('primary_navigation'))
+        <div>
+          {!! wp_nav_menu([
+              'theme_location' => 'primary_navigation',
+              'menu_class' => 'header__nav flex gap-x-[60px]',
+              'container' => false,
+              'echo' => false,
+              'depth' => 0
+          ]) !!}
+        </div>
+      @endif
+    </div>
+  </div>
+</div>
