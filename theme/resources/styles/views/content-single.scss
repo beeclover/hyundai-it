@@ -1,4 +1,4 @@
-.content-signle-casestudy {
+.content-signle {
   .entry-content {
     >* {
       @apply container;
@@ -9,7 +9,6 @@
     }
 
     >p {
-      max-width: 800px;
       min-height: 0.1px;
     }
 
@@ -28,6 +27,16 @@
         figure+figure {
           margin-top: 10px;
         }
+      }
+    }
+  }
+
+  &-notice .entry-content {
+    >*:not(figure) {
+      @apply container;
+
+      @media screen and (min-width: theme('screens.lg')) {
+        @apply max-w-[800px];
       }
     }
   }
