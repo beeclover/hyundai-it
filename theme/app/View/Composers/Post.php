@@ -26,6 +26,8 @@ class Post extends Composer
   {
     return [
       'title' => $this->title(),
+      'prev_post' => $this->previousPost(),
+      'next_post' => $this->nextPost(),
     ];
   }
 
@@ -65,5 +67,41 @@ class Post extends Composer
     }
 
     return get_the_title();
+  }
+
+  public function previousPost()
+  {
+    $prev_post = get_previous_post();
+    $prev_title = '이전 글이 없습니다.';
+    $prev_date = '';
+    $prev_permalink = null;
+    if ($prev_post) {
+        $prev_title = strip_tags(str_replace('"', '', $prev_post->post_title));
+        $prev_permalink = get_permalink($prev_post->ID);
+        $prev_date = get_the_date('Y-m-d', $prev_post->ID);
+    }
+    return [
+        'title' => $prev_title,
+        'date' => $prev_date,
+        'permalink' => $prev_permalink,
+    ];
+  }
+
+  public function nextPost()
+  {
+    $next_post = get_next_post();
+    $next_title = '다음 글이 없습니다.';
+    $next_date = '';
+    $next_permalink = null;
+    if ($next_post) {
+        $next_title = strip_tags(str_replace('"', '', $next_post->post_title));
+        $next_permalink = get_permalink($next_post->ID);
+        $next_date = get_the_date('Y-m-d', $next_post->ID);
+    }
+    return [
+        'title' => $next_title,
+        'date' => $next_date,
+        'permalink' => $next_permalink,
+    ];
   }
 }
