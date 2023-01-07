@@ -4,14 +4,16 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class DownloadPost extends Composer
+use function App\get_the_custom_excerpt;
+
+class PostCasestudy extends Composer
 {
   /**
    * List of views served by this composer.
    *
    * @var array
    */
-  protected static $views = ['partials.content-download'];
+  protected static $views = ['partials.content-casestudy'];
 
   /**
    * Data to be passed to view before rendering.
@@ -22,9 +24,6 @@ class DownloadPost extends Composer
   {
     return [
       'id' => get_the_ID(),
-      '분류' => $this->term('download-taxonomy'),
-      '제품' => $this->term('product'),
-      'downloadLinkUrl' => $this->downloadLinkUrl()
     ];
   }
 
@@ -37,6 +36,8 @@ class DownloadPost extends Composer
   {
     return [
       'title' => $this->title(),
+      'excerpt' => get_the_custom_excerpt(),
+      'tags' => $this->tags(),
     ];
   }
 
@@ -45,16 +46,10 @@ class DownloadPost extends Composer
     return get_the_title();
   }
 
-  public function term($slug)
+  public function tags()
   {
     global $post;
-    $term = get_the_terms($post, $slug)[0];
-    return $term->name;
-  }
-
-  public function downloadLinkUrl()
-  {
-    $term = get_field_object('attachments');
-    return $term ? $term['value']['url'] : '';
+    $tags = get_the_terms($post, 'casestudy-tag');
+    return $tags;
   }
 }

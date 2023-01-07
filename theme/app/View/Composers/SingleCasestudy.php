@@ -4,7 +4,7 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class CaseStudySingle extends Composer
+class SingleCasestudy extends Composer
 {
   protected static $views = [
     'partials.content-single-casestudy'

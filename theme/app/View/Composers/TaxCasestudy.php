@@ -6,7 +6,7 @@ use Roots\Acorn\View\Composer;
 
 use WP\NAV;
 
-class CaseStudyTaxTag extends Composer
+class TaxCasestudy extends Composer
 {
   /**
    * List of views served by this composer.
@@ -35,7 +35,7 @@ class CaseStudyTaxTag extends Composer
   public function override()
   {
     return [
-      'title' => $this->title(),
+      'title' => $this->title().'test',
       'post_type' => 'casestudy',
       'parent_menu' => (new NAV\Menu())->my_menu_parent('casestudy'),
     ];

@@ -31,7 +31,8 @@ class Archive extends Composer
       'post_type' => get_post_type(),
       'pagination' => (new UI\Pagination())->render(),
       'current_url' => $this->current_url(),
-      'parent_menu' => (new NAV\Menu())->my_menu_parent()
+      'parent_menu' => (new NAV\Menu())->my_menu_parent(),
+      'thumbnail' => $this->thumbnail(),
     ];
   }
 
@@ -45,6 +46,16 @@ class Archive extends Composer
     global $wp;
     $current_url = home_url( add_query_arg( array(), $wp->request ) );
     return $current_url;
+  }
+
+  public function thumbnail()
+  {
+    // acf option 페이지에서 background-image 필드를 가져온다.
+    $options = get_field(get_post_type(), 'option');
+    if ($options['background-image']['url'] ?? false) {
+      return $options['background-image']['url'];
+    }
+    return '';
   }
 }
 

@@ -4,7 +4,7 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class FaqPost extends Composer
+class PostFaq extends Composer
 {
   /**
    * List of views served by this composer.
