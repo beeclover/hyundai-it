@@ -6,9 +6,9 @@ use function Roots\view;
 
 class Pagination
 {
-    public function render($range = 8, $anchor = '')
+    public function render($range = 5, $anchor = '')
     {
-        $showitems = ($range * 2) + 1;
+        $showitems = ($range * 2);
 
         global $paged;
         if (empty($paged)) {
@@ -22,8 +22,8 @@ class Pagination
         }
 
         if ($pages > 1) {
-            $prevlink = $paged > 1 && $showitems < $pages ? get_pagenum_link($paged - 1) : '';
-            $nextlink = $paged < $pages && $showitems < $pages ? get_pagenum_link($paged + 1) : '';
+            $prevlink = $paged > 1 ? get_pagenum_link($paged - 1) : '';
+            $nextlink = $paged < $pages ? get_pagenum_link($paged + 1) : '';
             $lastlink = [
                 "link" => get_pagenum_link($pages),
                 "paged" => $pages
@@ -33,6 +33,12 @@ class Pagination
                 "paged" => 1
             ];
             $of = $paged + $showitems;
+
+            // 맨마지막 페이지일때 비활성화
+            if ($paged == $lastlink['paged']) {
+                $nextlink = '';
+                $lastlink["link"] = '';
+            }
 
             return view('partials.pagination', [
                 'pages' => $pages,

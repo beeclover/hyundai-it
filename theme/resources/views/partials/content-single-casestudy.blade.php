@@ -10,7 +10,7 @@
     </header>
   </div>
   <x-spacer class="h-[50px]" />
-  <div class="content-signle-casestudy">
+  <div class="content-signle content-signle-casestudy">
     <div class="entry-content prose-xl max-w-none">
       @php(the_content())
     </div>
