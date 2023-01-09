@@ -4,6 +4,8 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
+use function App\get_the_custom_excerpt;
+
 class Post extends Composer
 {
   /**
@@ -28,6 +30,7 @@ class Post extends Composer
       'title' => $this->title(),
       'prev_post' => $this->previousPost(),
       'next_post' => $this->nextPost(),
+      'excerpt' => get_the_custom_excerpt(),
     ];
   }
 
