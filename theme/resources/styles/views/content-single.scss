@@ -31,7 +31,8 @@
     }
   }
 
-  &-notice .entry-content {
+  &-notice .entry-content,
+  &-press .entry-content {
     >*:not(figure) {
       @apply container;
 
