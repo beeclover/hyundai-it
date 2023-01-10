@@ -28,12 +28,11 @@
   </div>
   <div class="container absolute top-0 left-1/2 -translate-x-1/2 h-full flex justify-end items-start pt-[48px] z-10">
     <div class="bg-white p-[55px]">
-      <div class="text-[26px] font-bold underline underline-offset-4">본사/연구소</div>
+      <div class="text-[26px] font-bold underline underline-offset-4">공장/고객센터</div>
       <x-spacer class="h-[20px]" />
       <div class="text-[24px] leading-[1.5] font-extralight">
-        서울시 강동구 상일로10길 36 <br />
-        세종텔레콤 지식산업센터 5층 (주)현대아이티<br />
-        대표전화 1566-7713
+        경상북도 김천시 아포읍 아포공단길 106<br />
+        대표전화 054-430-6426
       </div>
     </div>
   </div>
