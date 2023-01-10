@@ -1,0 +1,20 @@
+.scroll-custom-type1 {
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 17px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #000;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #000;
+  }
+}
