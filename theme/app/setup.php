@@ -42,6 +42,10 @@ add_action('wp_head', function () {
     if (!empty($post->ID) && ($post->ID === 920 || $post->ID === 917)) {
       echo '<link rel="modulepreload" crossorigin href="'. asset('dist/forms/chunk-PrivacyPolicy.js')->uri() .'">';
     }
+
+    if (!empty($post->ID) && $post->ID === 1127) {
+      echo '<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb2d12b8c1717deba19fa7e7c1c9e32f"></script>';
+    }
 });
 
 /**

@@ -30,7 +30,7 @@ class Post extends Composer
       'title' => $this->title(),
       'prev_post' => $this->previousPost(),
       'next_post' => $this->nextPost(),
-      'excerpt' => get_the_custom_excerpt(),
+      'excerpt' => $this->excerpt(),
     ];
   }
 
@@ -106,5 +106,13 @@ class Post extends Composer
         'date' => $next_date,
         'permalink' => $next_permalink,
     ];
+  }
+
+  public function excerpt()
+  {
+    if (is_404() || is_search() || is_archive() || is_home()) {
+      return '';
+    }
+    return get_the_custom_excerpt();
   }
 }
